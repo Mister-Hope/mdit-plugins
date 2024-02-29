@@ -7,18 +7,18 @@ import { createRequire } from "node:module";
 
 import { tex } from "@mdit/plugin-tex";
 import { type PluginWithOptions } from "markdown-it";
-import { type LiteDocument } from "mathjax-full/js/adaptors/lite/Document.js";
+import { type LiteDocument } from "mathjax-full/cjs/adaptors/lite/Document.js";
 import {
   type LiteElement,
   type LiteNode,
-} from "mathjax-full/js/adaptors/lite/Element.js";
-import { type LiteText } from "mathjax-full/js/adaptors/lite/Text.js";
-import { type LiteAdaptor } from "mathjax-full/js/adaptors/liteAdaptor.js";
-import { type MathDocument } from "mathjax-full/js/core/MathDocument.js";
-import { type TeX } from "mathjax-full/js/input/tex.js";
-import { type CHTML } from "mathjax-full/js/output/chtml.js";
-import { type SVG } from "mathjax-full/js/output/svg.js";
-import path from "upath";
+} from "mathjax-full/cjs/adaptors/lite/Element.js";
+import { type LiteText } from "mathjax-full/cjs/adaptors/lite/Text.js";
+import { type LiteAdaptor } from "mathjax-full/cjs/adaptors/liteAdaptor.js";
+import { type MathDocument } from "mathjax-full/cjs/core/MathDocument.js";
+import { type TeX } from "mathjax-full/cjs/input/tex.js";
+import { type CHTML } from "mathjax-full/cjs/output/chtml.js";
+import { type SVG } from "mathjax-full/cjs/output/svg.js";
+// import path from "upath";
 
 import { type MarkdownItMathjaxOptions } from "./options.js";
 
@@ -37,39 +37,40 @@ export const getDocumentOptions = (
 ): DocumentOptions | null => {
   try {
     const { AllPackages } = <
-      typeof import("mathjax-full/js/input/tex/AllPackages.js")
-    >require("mathjax-full/js/input/tex/AllPackages.js");
+      typeof import("mathjax-full/cjs/input/tex/AllPackages.js")
+    >require("mathjax-full/cjs/input/tex/AllPackages.js");
 
-    const { TeX } = <typeof import("mathjax-full/js/input/tex.js")>(
-      require("mathjax-full/js/input/tex.js")
+    const { TeX } = <typeof import("mathjax-full/cjs/input/tex.js")>(
+      require("mathjax-full/cjs/input/tex.js")
     );
-    const { CHTML } = <typeof import("mathjax-full/js/output/chtml.js")>(
-      require("mathjax-full/js/output/chtml.js")
+    const { CHTML } = <typeof import("mathjax-full/cjs/output/chtml.js")>(
+      require("mathjax-full/cjs/output/chtml.js")
     );
-    const { SVG } = <typeof import("mathjax-full/js/output/svg.js")>(
-      require("mathjax-full/js/output/svg.js")
+    const { SVG } = <typeof import("mathjax-full/cjs/output/svg.js")>(
+      require("mathjax-full/cjs/output/svg.js")
     );
+
+    require("mathjax-full/cjs/util/asyncLoad/node.js");
+
+    const OutputJax =
+      options.output === "chtml"
+        ? new CHTML<LiteElement, string, HTMLElement>({
+            adaptiveCSS: true,
+            ...options.chtml,
+          })
+        : new SVG<LiteElement, string, HTMLElement>({
+            fontCache: "none",
+            ...options.svg,
+          });
+
+    OutputJax.font.loadDynamicFilesSync();
 
     return {
       InputJax: new TeX<LiteElement, string, HTMLElement>({
         packages: AllPackages,
         ...options.tex,
       }),
-      OutputJax:
-        options.output === "chtml"
-          ? new CHTML<LiteElement, string, HTMLElement>({
-              fontURL: path.dirname(
-                require.resolve(
-                  "mathjax-full/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff",
-                ),
-              ),
-              adaptiveCSS: true,
-              ...options.chtml,
-            })
-          : new SVG<LiteElement, string, HTMLElement>({
-              fontCache: "none",
-              ...options.svg,
-            }),
+      OutputJax,
       enableAssistiveMml: options.a11y !== false,
     };
   } catch (err) {
@@ -128,20 +129,20 @@ export const createMathjaxInstance = (
 
   const { OutputJax, InputJax } = documentOptions;
 
-  const { CHTML } = <typeof import("mathjax-full/js/output/chtml.js")>(
-    require("mathjax-full/js/output/chtml.js")
+  const { CHTML } = <typeof import("mathjax-full/cjs/output/chtml.js")>(
+    require("mathjax-full/cjs/output/chtml.js")
   );
-  const adaptor = (<typeof import("mathjax-full/js/adaptors/liteAdaptor.js")>(
-    require("mathjax-full/js/adaptors/liteAdaptor.js")
+  const adaptor = (<typeof import("mathjax-full/cjs/adaptors/liteAdaptor.js")>(
+    require("mathjax-full/cjs/adaptors/liteAdaptor.js")
   )).liteAdaptor();
   const registerHTMLHandler = (<
-    typeof import("mathjax-full/js/handlers/html.js")
-  >require("mathjax-full/js/handlers/html.js")).RegisterHTMLHandler;
+    typeof import("mathjax-full/cjs/handlers/html.js")
+  >require("mathjax-full/cjs/handlers/html.js")).RegisterHTMLHandler;
   const assistiveMmlHandler = (<
-    typeof import("mathjax-full/js/a11y/assistive-mml.js")
-  >require("mathjax-full/js/a11y/assistive-mml.js")).AssistiveMmlHandler;
-  const { mathjax } = <typeof import("mathjax-full/js/mathjax.js")>(
-    require("mathjax-full/js/mathjax.js")
+    typeof import("mathjax-full/cjs/a11y/assistive-mml.js")
+  >require("mathjax-full/cjs/a11y/assistive-mml.js")).AssistiveMmlHandler;
+  const { mathjax } = <typeof import("mathjax-full/cjs/mathjax.js")>(
+    require("mathjax-full/cjs/mathjax.js")
   );
 
   const handler = registerHTMLHandler(adaptor);
@@ -185,8 +186,8 @@ export const createMathjaxInstance = (
 };
 
 export const mathjax: PluginWithOptions<MathjaxInstance> = (md, instance) => {
-  const { mathjax } = <typeof import("mathjax-full/js/mathjax.js")>(
-    require("mathjax-full/js/mathjax.js")
+  const { mathjax } = <typeof import("mathjax-full/cjs/mathjax.js")>(
+    require("mathjax-full/cjs/mathjax.js")
   );
   const { allowInlineWithSpace, adaptor, documentOptions, mathFence, vPre } =
     instance!;
