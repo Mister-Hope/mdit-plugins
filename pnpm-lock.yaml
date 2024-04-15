@@ -214,6 +214,15 @@ importers:
         specifier: 14.1.0
         version: 14.1.0
 
+  packages/column:
+    dependencies:
+      '@types/markdown-it':
+        specifier: ^14.0.0
+        version: 14.0.0(patch_hash=zmauny4nffqsvcin3jzxfzqopy)
+      markdown-it:
+        specifier: ^14.1.0
+        version: 14.1.0
+
   packages/container:
     dependencies:
       '@types/markdown-it':
