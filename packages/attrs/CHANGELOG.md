@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## <small>0.16.6 (2025-01-25)</small>
+## [0.16.6](https://github.com/mdit-plugins/mdit-plugins/compare/v0.16.2...v0.16.6) (2025-01-25)
 
 **Note:** Version bump only for package @mdit/plugin-attrs
 

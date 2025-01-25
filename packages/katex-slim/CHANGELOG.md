@@ -2,10 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## <small>0.16.6 (2025-01-25)</small>
+## [0.16.6](https://github.com/mdit-plugins/mdit-plugins/compare/v0.16.2...v0.16.6) (2025-01-25)
 
-- feat(katex)!: rebuild mhchem support ([178f3d1](https://github.com/mdit-plugins/mdit-plugins/commit/178f3d1))
-- fix(deps): update dependency katex to v0.16.21 [security] (#75) ([f6ddfdf](https://github.com/mdit-plugins/mdit-plugins/commit/f6ddfdf)), closes [#75](https://github.com/mdit-plugins/mdit-plugins/issues/75)
+### ⚠ BREAKING CHANGES
+
+- **katex:** rebuild mhchem support ([178f3d1](https://github.com/mdit-plugins/mdit-plugins/commit/178f3d1))
+
+### ✨ Features
+
+- **katex:** rebuild mhchem support ([178f3d1](https://github.com/mdit-plugins/mdit-plugins/commit/178f3d1))
 
 ## [0.16.2](https://github.com/mdit-plugins/mdit-plugins/compare/v0.16.1...v0.16.2) (2025-01-12)
 
