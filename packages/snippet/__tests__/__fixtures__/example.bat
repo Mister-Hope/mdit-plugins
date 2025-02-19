@@ -1,4 +1,6 @@
+::#region preface
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+::#endregion preface
 if '%errorlevel%' NEQ '0' (
 echo Requesting administrative privileges...
 goto UACPrompt

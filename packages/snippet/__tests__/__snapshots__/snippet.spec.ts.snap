@@ -148,7 +148,9 @@ h2 {
 `;
 
 exports[`should import all lines 8`] = `
-"<pre><code class="language-cs">using System;
+"<pre><code class="language-cs">// #region preface
+using System;
+// #endregion preface
 
 namespace HelloWorldApp {
 
@@ -278,81 +280,47 @@ exports[`should not parse code block 8`] = `
 `;
 
 exports[`should support region 1`] = `
-"<pre><code class="language-html">&lt;p&gt;
-  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi,
-  repellendus. Voluptatibus alias cupiditate at, fuga tenetur error officiis
-  provident quisquam autem, porro facere! Neque quibusdam animi quaerat
-  eligendi recusandae eaque.
-&lt;/p&gt;</code></pre>
+"<pre><code class="language-html"></code></pre>
 "
 `;
 
 exports[`should support region 2`] = `
-"<pre><code class="language-md">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-inventore iure quo aut doloremque, ipsum ab voluptatem ipsa, velit laborum
-illo quae omnis reiciendis hic, ut dolorem non debitis in!
-</code></pre>
+"<pre><code class="language-md"></code></pre>
 "
 `;
 
 exports[`should support region 3`] = `
-"<pre><code class="language-js">const mdIt = MarkdownIt().use(snippet, {
-  // your options, currentPath is required
-  currentPath: (env) =&gt; env.filePath,
-});</code></pre>
+"<pre><code class="language-js"></code></pre>
 "
 `;
 
 exports[`should support region 4`] = `
-"<pre><code class="language-ts">const mdIt = MarkdownIt().use(snippet, {
-  // your options, currentPath is required
-  currentPath: (env) =&gt; env.filePath,
-});</code></pre>
+"<pre><code class="language-ts"></code></pre>
 "
 `;
 
 exports[`should support region 5`] = `
-"<pre><code class="language-css">h1 {
-  font-size: 1.5rem;
-}</code></pre>
+"<pre><code class="language-css"></code></pre>
 "
 `;
 
 exports[`should support region 6`] = `
-"<pre><code class="language-scss">h1 {
-  font-size: 1.5rem;
-}
-</code></pre>
+"<pre><code class="language-scss"></code></pre>
 "
 `;
 
 exports[`should support region 7`] = `
-"<pre><code class="language-less">h1 {
-  font-size: 1.5rem;
-}
-</code></pre>
+"<pre><code class="language-less"></code></pre>
 "
 `;
 
 exports[`should support region 8`] = `
-"<pre><code class="language-cs">static void Main(string[] args) {
-
-    // statement
-    // printing Hello World!
-    Console.WriteLine(&quot;Hello World!&quot;);
-
-    // To prevents the screen from
-    // running and closing quickly
-    Console.ReadKey();
-}</code></pre>
+"<pre><code class="language-cs"></code></pre>
 "
 `;
 
 exports[`should support region 9`] = `
-"<pre><code class="language-java">public static void main(String args[]){
-  System.out.println(&quot;Hello World&quot;);
-}</code></pre>
+"<pre><code class="language-java"></code></pre>
 "
 `;
 
