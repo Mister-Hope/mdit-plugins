@@ -124,4 +124,24 @@ it("should give warnings with not exist path", () => {
     expect(rendered).toContain("Code snippet path not found");
     expect(env.snippetFiles?.length).toBe(undefined);
   });
+
+  it("should support multiple regions", () => {
+    const source = [
+      "<<< ./__fixtures__/example.bat#preface#snippet",
+      "<<< ./__fixtures__/example.cs#preface#snippet",
+    ];
+
+    source.forEach((item) => {
+      const env: SnippetEnv = {
+        filePath: __filename,
+      };
+      const rendered = md.render(item, env);
+
+      expect(rendered).toMatchSnapshot();
+      expect(env.snippetFiles?.length).toBe(1);
+      expect(env.snippetFiles?.[0]).toContain(
+        path.join(fixturesPath, "example."),
+      );
+    });
+  });
 });

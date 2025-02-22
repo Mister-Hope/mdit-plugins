@@ -1,4 +1,6 @@
+// #region preface
 using System;
+// #endregion preface
 
 namespace HelloWorldApp {
 

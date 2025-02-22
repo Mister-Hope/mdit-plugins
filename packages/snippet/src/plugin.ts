@@ -150,23 +150,31 @@ export const snippet: PluginWithOptions<MarkdownItSnippetOptions> = (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const meta: Record<string, unknown> =
       typeof token.meta === "object" ? (token.meta ?? {}) : {};
-    const [src, regionName] = meta.src ? (meta.src as string).split("#") : [""];
+    const [src, ...regionNames] = meta.src
+      ? (meta.src as string).split("#")
+      : [""];
 
     if (src)
       if (fs.lstatSync(src, { throwIfNoEntry: false })?.isFile()) {
         let content = fs.readFileSync(src, "utf8");
 
-        if (regionName) {
+        if (regionNames) {
           const lines = content.split(NEWLINE_RE);
-          const region = findRegion(lines, regionName);
+          const regions = regionNames
+            .map((regionName) => findRegion(lines, regionName))
+            .filter((r) => r !== null);
 
-          if (region)
+          if (regions.length > 0) {
             content = dedent(
-              lines
-                .slice(region.start, region.end)
-                .filter((line: string) => !region.regexp.test(line.trim()))
+              regions
+                .flatMap((region) =>
+                  lines
+                    .slice(region.start, region.end)
+                    .filter((line: string) => region.regexp.test(line.trim())),
+                )
                 .join("\n"),
             );
+          }
         }
 
         token.content = content;
